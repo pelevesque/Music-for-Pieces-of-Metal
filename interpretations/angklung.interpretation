@@ -1,0 +1,60 @@
+----------------------------------------------------------------------
+- Music for Pieces of Metal
+- balinese angklung version, for 9 musicians
+- copyright (c) 2015, Pierre-Emmanuel Lévesque
+- based on Music for Pieces of Wood by Steve Reich
+-
+- Glossary:
+-
+- sc ⭢ size canvas
+- sv ⭢ size viewport
+- sn ⭢ size note
+-
+- cb ⭢ color background
+- c1 ... c5 ⭢ color of voices 1 to 5
+-
+- nm ⭢ note metronome
+- n1a ... nna ⭢ ngumbang notes 1 to n
+- n1b ... nnb ⭢ ngisep notes 1 to n
+-
+- bpm ⭢ beats per minute
+----------------------------------------------------------------------
+
+@ Size
+
+sc 3840 2160
+sv 3000 2000
+sn 100 100
+
+@ Colors
+
+cb #000000
+c1 #FFFFFF
+c2 #00FFFF
+c3 #FF00FF
+c4 #FFFF00
+c5 #0000FF
+
+@ Notes
+
+nm  76
+n8a 75
+n8b 74
+n7a 73
+n7b 72
+n6a 71
+n6b 70
+n5a 69
+n5b 68
+n4a 67
+n4b 66
+n3a 65
+n3b 64
+n2a 63
+n2b 62
+n1a 61
+n1b 60
+
+@Tempo
+
+bpm 60

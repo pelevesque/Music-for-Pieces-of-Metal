@@ -4,6 +4,15 @@
 - copyright (c) 2015, Pierre-Emmanuel Lévesque
 - based on Music for Pieces of Wood by Steve Reich
 -
+- Structure Labels:
+-
+- @ intro              ⭢ #1
+- @ Section I          ⭢ #2 ... #26
+- @ Section I - Tutti  ⭢ #27 #28
+- @ Section II         ⭢ #29 ... #44
+- @ Section II - Tutti ⭢ #45 #46
+- @ Section III        ⭢ #47 ... #59
+-
 - Symbols:
 -   voice 1 ⭢ 0 (metronome)
 -   voice 2 ⭢ * (ostinato)

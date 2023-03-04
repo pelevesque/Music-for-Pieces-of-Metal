@@ -13,8 +13,7 @@
 - cb ⭢ color background
 - c1 ... c5 ⭢ color of voices 1 to 5
 -
-- nm ⭢ note metronome
-- n1 ... nn ⭢ ngumbang and ngisep notes of numbered voice
+- n0 ... nn ⭢ ngumbang and ngisep notes of numbered note
 -
 - bpm ⭢ beats per minute
 ----------------------------------------------------------------------
@@ -36,7 +35,7 @@ c5 #0000FF
 
 @ Notes
 
-nm 76
+n0 76 ''
 n1 60 61
 n2 62 63
 n3 64 65

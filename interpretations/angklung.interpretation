@@ -14,8 +14,7 @@
 - c1 ... c5 ⭢ color of voices 1 to 5
 -
 - nm ⭢ note metronome
-- n1a ... nna ⭢ ngumbang notes 1 to n
-- n1b ... nnb ⭢ ngisep notes 1 to n
+- n1 ... nn ⭢ ngumbang and ngisep notes of numbered voice
 -
 - bpm ⭢ beats per minute
 ----------------------------------------------------------------------
@@ -37,23 +36,15 @@ c5 #0000FF
 
 @ Notes
 
-nm  76
-n8a 75
-n8b 74
-n7a 73
-n7b 72
-n6a 71
-n6b 70
-n5a 69
-n5b 68
-n4a 67
-n4b 66
-n3a 65
-n3b 64
-n2a 63
-n2b 62
-n1a 61
-n1b 60
+nm 76
+n1 60 61
+n2 62 63
+n3 64 65
+n4 66 67
+n5 68 69
+n6 70 71
+n7 72 73
+n8 74 75
 
 @Tempo
 

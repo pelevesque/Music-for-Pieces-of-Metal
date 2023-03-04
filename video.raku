@@ -68,10 +68,10 @@ sub get_frames($file) {
     for $file.IO.lines -> $line {
         my $l = $line.trim;
 
-          # Ignore empty lines, comments ｢-｣, and sections ｢@｣.
+            # Ignore empty lines, comments ｢-｣, and sections ｢@｣.
         unless ! $l.chars || $l ~~ /^[\-||\@]/ {
 
-              # Create a new frame.
+                # Create a new frame.
             if $l.starts-with('#') {
                 if @frame.elems {
                     @frames.push(@frame.clone);
@@ -79,7 +79,7 @@ sub get_frames($file) {
                 }
             }
 
-              # Save a frame's row.
+                # Save a frame's row.
             else {
                 my @row = $l.comb;
                 @frame.push(@row);

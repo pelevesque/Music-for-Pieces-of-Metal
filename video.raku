@@ -27,7 +27,7 @@ sub MAIN($file) {
             }
             elsif @frames[25][$i][$j] ~~ '0' {
                 $color = 'yellow';
-            }  
+            }
 
             $svg ~= SVG_make-rectangle(90, 60, $x, $y, $color);
         }
@@ -47,7 +47,7 @@ sub SVG_make-rectangle($width, $height, $x, $y, $fill) {
 }
 
 sub SVG_open($width = 960, $height = 540, $background-color = 'black') {
-    return qq:to/END/;   
+    return qq:to/END/;
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="$width"

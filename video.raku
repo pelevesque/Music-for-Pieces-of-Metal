@@ -1,93 +1,119 @@
 #!/usr/bin/env raku
 
-sub MAIN($file) {
-    my @frames = get_frames($file);
+# --------------------------------------------------------------------
+class SvgImg {
+    has $.svg is rw;
 
-    my $svg =  SVG_open();
+    method open (
+        $width  = 960 * 4,
+        $height = 540 * 4,
+        $bg-color = 'black',
+    ) {
+        my $inst = self.bless;
+        $inst.svg = qq:to/END/;
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="$width"
+              height="$height"
+              style="background-color: $bg-color"
+            >
+            END
 
-    for 0..8 -> $i {
-        $svg ~= SVG_open-group();
-
-        for 0..11 -> $j {
-            my $x = $j * 80;
-            my $y = $i * 60;
-            my $color = 'black';
-
-            if @frames[25][$i][$j] ~~ '*' {
-                $color = 'red';
-            }
-            elsif @frames[25][$i][$j] ~~ /<[a .. z]>/ {
-                $color = 'pink';
-            }
-            elsif @frames[25][$i][$j] ~~ /<[1 .. 9]>/ {
-                $color = 'blue';
-            }
-            elsif @frames[25][$i][$j] ~~ /<[A .. Z]>/ {
-                $color = 'green';
-            }
-            elsif @frames[25][$i][$j] ~~ '0' {
-                $color = 'yellow';
-            }
-
-            $svg ~= SVG_make-rectangle(90, 60, $x, $y, $color);
-        }
-
-        $svg ~= SVG_close-group();
+        return $inst;
     }
 
-    $svg ~= SVG_close();
+    method close       { $!svg ~= "</svg>\n"; }
+    method open-group  { $!svg ~= "  <g>\n"; }
+    method close-group { $!svg ~= "  </g>\n"; }
 
-    spurt 'angklung.svg', $svg;
+    method rectangle ($width, $height, $x, $y, $fill) {
+        $!svg ~= "    <rect width='$width' height='$height'";
+        $!svg ~= " x='$x' y='$y' style='fill: $fill'/>\n";
+    }
+
 }
 
-sub SVG_make-rectangle($width, $height, $x, $y, $fill) {
-    return qq:to/END/;
-            <rect width="$width" height="$height" x="$x" y="$y" style="fill: $fill" />
-        END
+# --------------------------------------------------------------------
+sub MAIN ($data-file, $dst-dir) {
+    my @frames = get_frames($data-file);
+
+        # Keep just the basename, truncating the extension.
+    (my $basename = $data-file.IO.basename) ~~ s/ '.' .* //;
+
+    my $rect-wyd = 90;
+    my $rect-hyt = 60;
+
+    for @frames.kv -> $iFrame, @frame {
+        my $img = SvgImg.open;
+        for @frame.kv -> $iRow, @row {
+            $img.open-group();
+            for @row.kv -> $iElem, $elem {
+                my $y = $iRow * $rect-hyt;
+                my $x = $iElem * $rect-wyd;
+                my $color = do given $elem {
+                    when '*'                { 'red' }
+                    when '0'                { 'yellow' }
+                    when / <[a .. h]> | z / { 'pink' }
+                    when / <[A .. H]> | Z / { 'green' }
+                    when / <[1 .. 9]> /     { 'blue' }
+                    default                 { 'black' }
+                };
+
+                $img.rectangle(
+                    $rect-wyd,
+                    $rect-hyt,
+                    $x,
+                    $y,
+                    $color,
+                );
+
+                    # Last played note marker.
+                $img.rectangle(
+                    $rect-wyd / 2,
+                    $rect-hyt / 2,
+                    $x + ($rect-wyd / 4),
+                    $y + ($rect-hyt / 4),
+                    'purple',
+                ) if $elem eq 'z' | 'Z' | 9;
+
+            }
+            $img.close-group();
+        }
+        $img.close;
+        spurt sprintf(
+            "$dst-dir/$basename.%02d.svg",
+            $iFrame + 1
+        ), $img.svg;
+    }
+
 }
 
-sub SVG_open($width = 960, $height = 540, $background-color = 'black') {
-    return qq:to/END/;
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="$width"
-          height="$height"
-          style="background-color: $background-color"
-        >
-        END
-}
+# --------------------------------------------------------------------
+sub get_frames ($data-file) {
+    my @frame;
+    my @frames;
 
-sub SVG_close()       { return "</svg>\n" }
-sub SVG_open-group()  { return "  <g>\n"  }
-sub SVG_close-group() { return "  </g>\n" }
-
-sub get_frames($file) {
-    my @frame = [];
-    my @frames = [];
-
-    for $file.IO.lines -> $line {
-        my $l = $line.trim;
+    for $data-file.IO.lines -> $l {
+        my $line = $l.trim;
 
             # Ignore empty lines, comments ｢-｣, and sections ｢@｣.
-        unless ! $l.chars || $l ~~ /^[\-||\@]/ {
+        if $line.chars && $line !~~ /^ <[-@]> / {
 
                 # Create a new frame.
-            if $l.starts-with('#') {
+            if $line.starts-with: '#' {
                 if @frame.elems {
-                    @frames.push(@frame.clone);
-                    @frame = [];
+                    @frames.push: @frame.clone;
+                    @frame = Empty;
                 }
             }
 
                 # Save a frame's row.
             else {
-                my @row = $l.comb;
-                @frame.push(@row);
+                my @row = $line.comb;
+                @frame.push: @row;
             }
         }
     }
-
-    @frames.push(@frame);
-
+    @frames.push: @frame;
     return @frames;
 }

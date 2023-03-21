@@ -1,5 +1,6 @@
 #!/usr/bin/env raku
 
+# --------------------------------------------------------------------
 sub MAIN() {
     my $file;
 
@@ -13,6 +14,7 @@ sub MAIN() {
     my $tempo = get_tempo($file);
 }
 
+# --------------------------------------------------------------------
 sub get_frames ($data-file) {
     my @frame;
     my @frames;
@@ -42,6 +44,7 @@ sub get_frames ($data-file) {
     return @frames;
 }
 
+# --------------------------------------------------------------------
 sub get_notes($file) {
     my %notes;
 
@@ -57,6 +60,7 @@ sub get_notes($file) {
     return %notes;
 }
 
+# --------------------------------------------------------------------
 sub get_tempo($file) {
         # Default.
     my $tempo = 60;

@@ -13,34 +13,32 @@ sub MAIN() {
     my $tempo = get_tempo($file);
 }
 
-sub get_frames($file) {
-    my @frame = [];
-    my @frames = [];
+sub get_frames ($data-file) {
+    my @frame;
+    my @frames;
 
-    for $file.IO.lines -> $line {
-        my $l = $line.trim;
+    for $data-file.IO.lines -> $l {
+        my $line = $l.trim;
 
             # Ignore empty lines, comments ｢-｣, and sections ｢@｣.
-        unless ! $l.chars || $l ~~ /^[\-||\@]/ {
+        if $line.chars && $line !~~ /^ <[-@]> / {
 
                 # Create a new frame.
-            if $l.starts-with('#') {
+            if $line.starts-with: '#' {
                 if @frame.elems {
-                    @frames.push(@frame.clone);
-                    @frame = [];
+                    @frames.push: @frame.clone;
+                    @frame = Empty;
                 }
             }
 
                 # Save a frame's row.
             else {
-                my @row = $l.comb;
-                @frame.push(@row);
+                my @row = $line.comb;
+                @frame.push: @row;
             }
         }
     }
-
-    @frames.push(@frame);
-
+    @frames.push: @frame;
     return @frames;
 }
 

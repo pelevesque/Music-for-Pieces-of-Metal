@@ -11,7 +11,7 @@ sub MAIN() {
         # Get interpretative notes.
     $file = 'interpretations/angklung.interpretation';
     my %notes = get_notes($file);
-    my $tempo = get_tempo($file);
+    my $tempo = +($file.IO.slurp ~~ / ^^ bpm \s+ (\d+) /)[0];
 }
 
 # --------------------------------------------------------------------
@@ -58,21 +58,4 @@ sub get_notes($file) {
     }
 
     return %notes;
-}
-
-# --------------------------------------------------------------------
-sub get_tempo($file) {
-        # Default.
-    my $tempo = 60;
-
-    for $file.IO.lines -> $line {
-        my $l = $line.trim;
-
-        if $l.starts-with('bpm') {
-            my @l = $l.split(' ');
-            $tempo = @l[1];
-        }
-    }
-
-    return $tempo;
 }

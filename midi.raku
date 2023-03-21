@@ -52,8 +52,8 @@ sub get_notes($file) {
         my $l = $line.trim;
 
         if $l.starts-with('n') {
-            my @l = $l.split(' ');
-            %notes{substr(@l[0], 1)} = @l[1], @l[2];
+            my @l = $l.split(/\s+/);
+            %notes{@l[0]} = @l[1];
         }
     }
 

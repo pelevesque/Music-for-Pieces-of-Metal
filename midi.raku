@@ -11,7 +11,8 @@ sub MAIN() {
         # Get interpretative notes.
     $file = 'interpretations/angklung.interpretation';
     my %notes = get_notes($file);
-    my $tempo = +($file.IO.slurp ~~ / ^^ bpm \s+ (\d+) /)[0];
+    my $tempo = +($file.IO.slurp ~~ / ^^ bpm  \s+ (\d+) /)[0];
+    my $nlen  = +($file.IO.slurp ~~ / ^^ nlen \s+ ([\d+.]+) /)[0];
 }
 
 # --------------------------------------------------------------------

@@ -29,26 +29,26 @@ sn 100 100
 @ Colors
 
 cb #000000
-c1 #FFFFFF
-c2 #00FFFF
-c3 #FF00FF
-c4 #FFFF00
-c5 #0000FF
+c1 #00ffff
+c2 #00dbff
+c3 #10a5f5
+c4 #0c71e0
+c5 #0859c6
 
 @ Notes
 
-n0 76 ''
-n1 60 61
-n2 62 63
-n3 64 65
-n4 66 67
-n5 68 69
-n6 70 71
-n7 72 73
-n8 74 75
+n0 91
+n1 86
+n2 83
+n3 81
+n4 79
+n5 74
+n6 71
+n7 69
+n8 67
 
 nlen 0.5
 
 @Tempo
 
-bpm 60
+bpm 230

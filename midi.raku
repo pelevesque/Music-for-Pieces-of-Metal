@@ -61,18 +61,18 @@ sub MAIN() {
     }
 
     for @frames.kv -> $iFrame, @frame {
+
+            # Add tempo-map changes.
+        given $iFrame {
+            when 0  { add_tempo-map-event( 'Intro',   6\4 )}
+            when 1  { add_tempo-map-event( 'I'            )}
+            when 26 { add_tempo-map-event( 'I Tutti'      )}
+            when 28 { add_tempo-map-event( 'II',      4\4 )}
+            when 44 { add_tempo-map-event( 'II Tutti'     )}
+            when 46 { add_tempo-map-event( 'III',     3\4 )}
+        }
+
         for ^4 {
-
-                # Add tempo-map changes.
-            given $iFrame {
-                when 0  { add_tempo-map-event( 'Intro',   6\4 )}
-                when 1  { add_tempo-map-event( 'I'            )}
-                when 26 { add_tempo-map-event( 'I Tutti'      )}
-                when 28 { add_tempo-map-event( 'II',      4\4 )}
-                when 44 { add_tempo-map-event( 'II Tutti'     )}
-                when 46 { add_tempo-map-event( 'III',     3\4 )}
-            }
-
             for ^@frame[0].elems -> $iCol {
 
                 $t_tempo-map.dt: $t_tempo-map.dt + $slot-length;

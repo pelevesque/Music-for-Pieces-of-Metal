@@ -10,11 +10,11 @@ sub MAIN() {
     my $file;
 
         # Get score frames.
-    $file = 'scores/angklung.score';
+    $file = 'scores/selunding.score';
     my @frames = get_frames($file);
 
         # Get interpretative notes.
-    $file = 'interpretations/angklung.interpretation';
+    $file = 'interpretations/selunding.interpretation';
     my %notes = get_notes($file);
     my $bpm = +($file.IO.slurp ~~ / ^^ bpm  \s+ (\d+) /)[0];
     my $nlen_percentage = +($file.IO.slurp ~~ / ^^ nlen \s+ ([\d+.]+) /)[0];
@@ -34,29 +34,31 @@ sub MAIN() {
     my $t_voice5 = Track.new(:name('voice 5'), :ch(4));
 
         # Set panning
-    $t_voice1.pan: 64;
-    $t_voice2.pan: 40;
-    $t_voice3.pan: 88;
-    $t_voice4.pan: 10;
-    $t_voice5.pan: 118;
+    $t_voice1.pan_MSB: 64;
+    $t_voice2.pan_MSB: 40;
+    $t_voice3.pan_MSB: 88;
+    $t_voice4.pan_MSB: 10;
+    $t_voice5.pan_MSB: 118;
 
         # Set tempo-map infos.
     $t_tempo-map.copyright: "Copyright 2023 Pierre-Emmanuel Levesque";
     $t_tempo-map.tempo: ♩$bpm;
 
-    sub add_tempo-map-event ($marker, $time?) {
+    sub add_tempo-map-event ($marker, $time-signature?) {
         $t_tempo-map.marker: $marker;
-        $t_tempo-map.time($time) if $time.defined;
+        if ($time-signature.defined) {
+            $t_tempo-map.time-signature($time-signature);
+        }
     }
 
     sub add_note-event ($track, $key) {
         if $key > -1 {
             $track.note-on: +%notes{$key};
-            $track.dt: $note-length;
+            $track.delta-time: $note-length;
             $track.note-off: +%notes{$key};
-            $track.dt: $rest-length;
+            $track.delta-time: $rest-length;
         } else {
-            $track.dt: $track.dt + $slot-length;
+            $track.delta-time: $track.delta-time + $slot-length;
         }
     }
 
@@ -75,7 +77,7 @@ sub MAIN() {
         for ^4 {
             for ^@frame[0].elems -> $iCol {
 
-                $t_tempo-map.dt: $t_tempo-map.dt + $slot-length;
+                $t_tempo-map.delta-time: $t_tempo-map.delta-time + $slot-length;
 
                 my ($v1, $v2, $v3, $v4, $v5) = -1 xx *;
 

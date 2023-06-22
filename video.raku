@@ -35,6 +35,8 @@ class SvgImg {
 
 # --------------------------------------------------------------------
 sub MAIN ($score-file, $dst-dir) {
+    mkdir $dst-dir;
+
     my @frames = get_frames($score-file);
 
         # Keep just the basename, truncating the extension.

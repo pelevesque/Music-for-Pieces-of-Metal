@@ -34,11 +34,11 @@ class SvgImg {
 }
 
 # --------------------------------------------------------------------
-sub MAIN ($data-file, $dst-dir) {
-    my @frames = get_frames($data-file);
+sub MAIN ($score-file, $dst-dir) {
+    my @frames = get_frames($score-file);
 
         # Keep just the basename, truncating the extension.
-    (my $basename = $data-file.IO.basename) ~~ s/ '.' .* //;
+    (my $basename = $score-file.IO.basename) ~~ s/ '.' .* //;
 
     my $rect-wyd = 90;
     my $rect-hyt = 60;
@@ -89,11 +89,11 @@ sub MAIN ($data-file, $dst-dir) {
 }
 
 # --------------------------------------------------------------------
-sub get_frames ($data-file) {
+sub get_frames ($score-file) {
     my @frame;
     my @frames;
 
-    for $data-file.IO.lines -> $l {
+    for $score-file.IO.lines -> $l {
         my $line = $l.trim;
 
             # Ignore empty lines, comments ｢-｣, and sections ｢@｣.

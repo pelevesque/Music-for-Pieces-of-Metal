@@ -1,0 +1,4 @@
+#!/bin/bash
+
+    # Make a PDF file from PS.
+ps2pdf score.ps

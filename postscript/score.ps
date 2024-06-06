@@ -4,29 +4,48 @@
 % Draw a square.
 
 newpath
-300 300 moveto
+250 350 moveto
 100 0 rlineto
 0 100 rlineto
 -100 0 rlineto
 closepath
-1 setlinewidth
 stroke
 
 % --------------------------------------------------------------------
-% Draw a triangle.
+% Draw a circle in the square.
 
 newpath
-326 326 moveto
-48 0 rlineto
--24 58 rlineto
+300 400 50 0 360 arc
 closepath
 stroke
 
 % --------------------------------------------------------------------
-% Draw a circle.
+% Draw an equilateral triangle in the circle.
+
 newpath
-350 350 35 0 360 arc
+
+    % Start from the apex of the triangle.
+    % (Top center of the square/circle).
+300 450 moveto
+
+    % Use polar coordinates to calculate the x,y point of the bottom
+    % left point of the triangle.
+    % Note: postscript cos works in degrees!
+    % x = cos(240 degrees) * radius
+    % y = sin(240 degress) * radius
+    % The radius represents the length of one side of the equilateral
+    % triangle, and that is equal to the square root of 3 times the
+    % radius of the circle.
+    % We also translate our position at the end.
+240 cos 3 sqrt 50 mul mul 300 add % x
+240 sin 3 sqrt 50 mul mul 450 add % y
+lineto
+
+    % We can just draw the bottom by using the length
+    % of a triangle side.
+3 sqrt 50 mul 0 rlineto
 closepath
+
 stroke
 
 showpage

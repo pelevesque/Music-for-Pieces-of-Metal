@@ -4,10 +4,28 @@
 % Draw a square.
 
 newpath
-200  200 moveto
-100  0   rlineto
-0    100 rlineto
--100 0   rlineto
+300 300 moveto
+100 0 rlineto
+0 100 rlineto
+-100 0 rlineto
+closepath
+1 setlinewidth
+stroke
+
+% --------------------------------------------------------------------
+% Draw a triangle.
+
+newpath
+326 326 moveto
+48 0 rlineto
+-24 58 rlineto
+closepath
+stroke
+
+% --------------------------------------------------------------------
+% Draw a circle.
+newpath
+350 350 35 0 360 arc
 closepath
 stroke
 

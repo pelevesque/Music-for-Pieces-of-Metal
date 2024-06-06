@@ -4,17 +4,29 @@
 /xdef { exch def } bdef
 
 /square {
-    newpath
     /side xdef
     /y xdef
     /x xdef
-    x y moveto
-    side 0 rlineto
-    0 side rlineto
-    side neg 0 rlineto
+    newpath
+        x y moveto
+        side 0 rlineto
+        0 side rlineto
+        side neg 0 rlineto
     closepath
     stroke
-} def
+} bdef
+
+/circle {
+    /endangle xdef
+    /startangle xdef
+    /radius xdef
+    /y xdef
+    /x xdef
+    newpath
+        x y radius startangle endangle arc
+    closepath
+    stroke
+} bdef
 
 % --------------------------------------------------------------------
 % Draw a square.
@@ -24,10 +36,7 @@
 % --------------------------------------------------------------------
 % Draw a circle in the square.
 
-newpath
-300 400 50 0 360 arc
-closepath
-stroke
+300 400 50 0 360 circle
 
 % --------------------------------------------------------------------
 % Draw an equilateral triangle in the circle.
@@ -56,7 +65,8 @@ lineto
 3 sqrt 50 mul 0 rlineto
 2 setlinejoin % Use bevel joins to avoid triangle ends sticking out.
 closepath
-
 stroke
+
+% --------------------------------------------------------------------
 
 showpage

@@ -54,6 +54,7 @@ lineto
     % We can just draw the bottom by using the length
     % of a triangle side.
 3 sqrt 50 mul 0 rlineto
+2 setlinejoin % Use bevel joins to avoid triangle ends sticking out.
 closepath
 
 stroke

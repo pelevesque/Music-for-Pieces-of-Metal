@@ -1,15 +1,25 @@
 %!PS
 
+/bdef { bind def } bind def
+/xdef { exch def } bdef
+
+/square {
+    newpath
+    /side xdef
+    /y xdef
+    /x xdef
+    x y moveto
+    side 0 rlineto
+    0 side rlineto
+    side neg 0 rlineto
+    closepath
+    stroke
+} def
+
 % --------------------------------------------------------------------
 % Draw a square.
 
-newpath
-250 350 moveto
-100 0 rlineto
-0 100 rlineto
--100 0 rlineto
-closepath
-stroke
+250 350 100 square
 
 % --------------------------------------------------------------------
 % Draw a circle in the square.

@@ -3,20 +3,77 @@
 /bdef { bind def } bind def
 /xdef { exch def } bdef
 
-/square {
-    /side xdef
+% --------------------------------------------------------------------
+% No stack juggling, but polluting user dictionary with /x /y /w /h
+% stack: x y w h => ｢empty｣
+/rectangleA {
+    /h xdef
+    /w xdef
     /y xdef
     /x xdef
     newpath
         x y moveto
-        side 0 rlineto
-        0 side rlineto
-        side neg 0 rlineto
+        w 0 rlineto
+        0 h rlineto
+        w neg 0 rlineto
     closepath
     stroke
 } bdef
 
-/circle {
+% --------------------------------------------------------------------
+% Draw, stack juggle, then draw, then stack juggle, then draw...
+% stack: x y w h => ｢empty｣
+/rectangleB {
+    4 2 roll    % w h x y
+    newpath
+        moveto  % w h
+        1 index % w h w
+        0       % w h w 0
+        rlineto % w h
+        0 exch  % w 0 h
+        rlineto % w
+        neg     % -w
+        0       % -w 0
+        rlineto % ｢empty｣
+    closepath
+    stroke
+} bdef
+
+% --------------------------------------------------------------------
+% Stack juggle, then draw.
+% stack: x y w h => ｢empty｣
+/rectangleC {
+    exch        % x y h w
+    dup neg     % x y h w -w
+    0 exch      % x y h w 0 -w
+    0 0         % x y h w 0 -w 0 0
+    6 3 roll    % x y -w 0 0 h w 0
+    8 -2 roll   % -w 0 0 h w 0 x y
+    newpath
+        moveto  % -w 0 0 h w 0
+        rlineto % -w 0 0 h
+        rlineto % -w 0
+        rlineto % ｢empty｣
+    closepath
+    stroke
+} bdef
+
+/squareA {
+    /w xdef
+    /y xdef
+    /x xdef
+    x y w w rectangleA
+} bdef
+
+% --------------------------------------------------------------------
+% Stack juggle, then draw.
+% stack: x y w => ｢empty｣
+/squareB {
+    dup        % x y w w
+    rectangleA % ｢empty｣
+} bdef
+
+/circleA{
     /endangle xdef
     /startangle xdef
     /radius xdef
@@ -29,14 +86,28 @@
 } bdef
 
 % --------------------------------------------------------------------
-% Draw a square.
+% Stack juggle, then draw.
+% stack: x y radius startangle endangle => ｢empty｣
+/circleB {
+    newpath
+        arc
+    closepath
+    stroke
+} bdef
 
-250 350 100 square
+% --------------------------------------------------------------------
+% Draw a square and rectangles.
+
+250 350 100 squareB
+
+400 200 100 50 rectangleA
+400 400 100 50 rectangleB
+400 600 100 50 rectangleC
 
 % --------------------------------------------------------------------
 % Draw a circle in the square.
 
-300 400 50 0 360 circle
+300 400 50 0 360 circleB
 
 % --------------------------------------------------------------------
 % Draw an equilateral triangle in the circle.

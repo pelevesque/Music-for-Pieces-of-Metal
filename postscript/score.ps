@@ -58,6 +58,23 @@
     closepath
 } bdef
 
+    % cx cy w => ｢empty｣
+/isoscelesTrianglePath {
+    /w xdef
+    /cy xdef
+    /cx xdef
+    /apothem { w 2 div } bdef
+    /xApex cx def
+    /yApex { cy apothem add } bdef
+    /x { cx apothem sub } bdef
+    /y { cy apothem sub } bdef
+    newpath
+        xApex yApex moveto
+        x y lineto
+        w 0 rlineto
+    closepath
+} bdef
+
     % cx cy => ｢empty｣
 /containerPath {
     /cy xdef
@@ -80,20 +97,30 @@
 } bdef
 
     % cx cy => ｢empty｣
-/triangleVoicePath {
+/triangleAVoicePath {
     /cy xdef
     /cx xdef
     cx cy widthVoiceShape equilateralTrianglePath
+} bdef
+
+    % cx cy => ｢empty｣
+/triangleBVoicePath {
+    /cy xdef
+    /cx xdef
+    cx cy widthVoiceShape isoscelesTrianglePath
 } bdef
 
 % --------------------------------------------------------------------
 % Program
 
 100 100 containerPath stroke
-100 100 triangleVoicePath stroke
+100 100 circleVoicePath stroke
 
 200 100 containerPath stroke
-200 100 circleVoicePath stroke
+200 100 squareVoicePath stroke
 
 300 100 containerPath stroke
-300 100 squareVoicePath stroke
+300 100 triangleAVoicePath stroke
+
+400 100 containerPath stroke
+400 100 triangleBVoicePath stroke

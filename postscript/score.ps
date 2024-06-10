@@ -1,143 +1,99 @@
 %!PS
 
+% --------------------------------------------------------------------
+% Config
+
+/widthContainer 100 def
+/widthVoiceShape 60 def
+
+% --------------------------------------------------------------------
+% Utilities
+
 /bdef { bind def } bind def
 /xdef { exch def } bdef
 
-% --------------------------------------------------------------------
-% No stack juggling, but polluting user dictionary with /x /y /w /h
-% stack: x y w h => ｢empty｣
-/rectangleA {
-    /h xdef
+    % cx cy w => ｢empty｣
+/squarePath {
     /w xdef
-    /y xdef
-    /x xdef
+    /cy xdef
+    /cx xdef
+    /radius { w 2 div } bdef
+    /x { cx radius sub } bdef
+    /y { cy radius sub } bdef
     newpath
         x y moveto
         w 0 rlineto
-        0 h rlineto
+        0 w rlineto
         w neg 0 rlineto
     closepath
-    stroke
 } bdef
 
-% --------------------------------------------------------------------
-% Draw, stack juggle, then draw, then stack juggle, then draw...
-% stack: x y w h => ｢empty｣
-/rectangleB {
-    4 2 roll    % w h x y
-    newpath
-        moveto  % w h
-        1 index % w h w
-        0       % w h w 0
-        rlineto % w h
-        0 exch  % w 0 h
-        rlineto % w
-        neg     % -w
-        0       % -w 0
-        rlineto % ｢empty｣
-    closepath
-    stroke
-} bdef
-
-% --------------------------------------------------------------------
-% Stack juggle, then draw.
-% stack: x y w h => ｢empty｣
-/rectangleC {
-    exch        % x y h w
-    dup neg     % x y h w -w
-    0 exch      % x y h w 0 -w
-    0 0         % x y h w 0 -w 0 0
-    6 3 roll    % x y -w 0 0 h w 0
-    8 -2 roll   % -w 0 0 h w 0 x y
-    newpath
-        moveto  % -w 0 0 h w 0
-        rlineto % -w 0 0 h
-        rlineto % -w 0
-        rlineto % ｢empty｣
-    closepath
-    stroke
-} bdef
-
-/squareA {
+    % cx cy w => ｢empty｣
+/circlePath {
     /w xdef
-    /y xdef
-    /x xdef
-    x y w w rectangleA
-} bdef
-
-% --------------------------------------------------------------------
-% Stack juggle, then draw.
-% stack: x y w => ｢empty｣
-/squareB {
-    dup        % x y w w
-    rectangleA % ｢empty｣
-} bdef
-
-/circleA{
-    /endangle xdef
-    /startangle xdef
-    /radius xdef
-    /y xdef
-    /x xdef
+    /cy xdef
+    /cx xdef
+    /radius { w 2 div } bdef
     newpath
-        x y radius startangle endangle arc
+        cx cy radius 0 360 arc
     closepath
-    stroke
 } bdef
 
-% --------------------------------------------------------------------
-% Stack juggle, then draw.
-% stack: x y radius startangle endangle => ｢empty｣
-/circleB {
+    % cx cy containerWidtth => ｢empty｣
+/equilateralTrianglePath {
+    /containerWidth xdef
+    /cy xdef
+    /cx xdef
+    /containerRadius { containerWidth 2 div } bdef
+    /xApex cx def
+    /yApex { cy containerRadius add } bdef
+    /side { 3 sqrt containerRadius mul } bdef
+         % Find using polar coordinates.
+    /xBottomLeftCorner { 240 cos side mul xApex add } bdef
+    /yBottomLeftCorner { 240 sin side mul yApex add } bdef
     newpath
-        arc
+        xApex yApex moveto
+        xBottomLeftCorner yBottomLeftCorner lineto
+        side 0 rlineto
     closepath
-    stroke
+} bdef
+
+    % cx cy => ｢empty｣
+/containerPath {
+    /cy xdef
+    /cx xdef
+    cx cy widthContainer squarePath
+} bdef
+
+    % cx cy => ｢empty｣
+/squareVoicePath {
+    /cy xdef
+    /cx xdef
+    cx cy widthVoiceShape squarePath
+} bdef
+
+    % cx cy => ｢empty｣
+/circleVoicePath {
+    /cy xdef
+    /cx xdef
+    cx cy widthVoiceShape circlePath
+} bdef
+
+    % cx cy => ｢empty｣
+/triangleVoicePath {
+    /cy xdef
+    /cx xdef
+    cx cy widthVoiceShape equilateralTrianglePath
 } bdef
 
 % --------------------------------------------------------------------
-% Draw a square and rectangles.
+% Program
 
-250 350 100 squareB
+100 100 containerPath stroke
+100 100 triangleVoicePath stroke
 
-400 200 100 50 rectangleA
-400 400 100 50 rectangleB
-400 600 100 50 rectangleC
+200 100 containerPath stroke
+200 100 circleVoicePath stroke
 
-% --------------------------------------------------------------------
-% Draw a circle in the square.
-
-300 400 50 0 360 circleB
-
-% --------------------------------------------------------------------
-% Draw an equilateral triangle in the circle.
-
-newpath
-
-    % Start from the apex of the triangle.
-    % (Top center of the square/circle).
-300 450 moveto
-
-    % Use polar coordinates to calculate the x,y point of the bottom
-    % left point of the triangle.
-    % Note: postscript cos works in degrees!
-    % x = cos(240 degrees) * radius
-    % y = sin(240 degress) * radius
-    % The radius represents the length of one side of the equilateral
-    % triangle, and that is equal to the square root of 3 times the
-    % radius of the circle.
-    % We also translate our position at the end.
-240 cos 3 sqrt 50 mul mul 300 add % x
-240 sin 3 sqrt 50 mul mul 450 add % y
-lineto
-
-    % We can just draw the bottom by using the length
-    % of a triangle side.
-3 sqrt 50 mul 0 rlineto
-2 setlinejoin % Use bevel joins to avoid triangle ends sticking out.
-closepath
-stroke
-
-% --------------------------------------------------------------------
-
-showpage
+300 100 containerPath stroke
+300 100 squareVoicePath stroke

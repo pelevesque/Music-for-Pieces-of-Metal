@@ -39,25 +39,6 @@
     closepath
 } bdef
 
-    % cx cy containerWidtth => ｢empty｣
-/equilateralTrianglePath {
-    /containerWidth xdef
-    /cy xdef
-    /cx xdef
-    /containerApothem { containerWidth 2 div } bdef
-    /xApex cx def
-    /yApex { cy containerApothem add } bdef
-    /side { 3 sqrt containerApothem mul } bdef
-         % Find using polar coordinates.
-    /xBottomLeftCorner { 240 cos side mul xApex add } bdef
-    /yBottomLeftCorner { 240 sin side mul yApex add } bdef
-    newpath
-        xApex yApex moveto
-        xBottomLeftCorner yBottomLeftCorner lineto
-        side 0 rlineto
-    closepath
-} bdef
-
     % cx cy w => ｢empty｣
 /isoscelesTrianglePath {
     /w xdef
@@ -97,14 +78,7 @@
 } bdef
 
     % cx cy => ｢empty｣
-/triangleAVoicePath {
-    /cy xdef
-    /cx xdef
-    cx cy widthVoiceShape equilateralTrianglePath
-} bdef
-
-    % cx cy => ｢empty｣
-/triangleBVoicePath {
+/triangleVoicePath {
     /cy xdef
     /cx xdef
     cx cy widthVoiceShape isoscelesTrianglePath
@@ -120,7 +94,4 @@
 200 100 squareVoicePath stroke
 
 300 100 containerPath stroke
-300 100 triangleAVoicePath stroke
-
-400 100 containerPath stroke
-400 100 triangleBVoicePath stroke
+300 100 triangleVoicePath stroke

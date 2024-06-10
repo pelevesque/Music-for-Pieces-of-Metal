@@ -17,9 +17,9 @@
     /w xdef
     /cy xdef
     /cx xdef
-    /radius { w 2 div } bdef
-    /x { cx radius sub } bdef
-    /y { cy radius sub } bdef
+    /apothem { w 2 div } bdef
+    /x { cx apothem sub } bdef
+    /y { cy apothem sub } bdef
     newpath
         x y moveto
         w 0 rlineto
@@ -28,12 +28,12 @@
     closepath
 } bdef
 
-    % cx cy w => ｢empty｣
+    % cx cy diameter => ｢empty｣
 /circlePath {
-    /w xdef
+    /diameter xdef
     /cy xdef
     /cx xdef
-    /radius { w 2 div } bdef
+    /radius { diameter 2 div } bdef
     newpath
         cx cy radius 0 360 arc
     closepath
@@ -44,10 +44,10 @@
     /containerWidth xdef
     /cy xdef
     /cx xdef
-    /containerRadius { containerWidth 2 div } bdef
+    /containerApothem { containerWidth 2 div } bdef
     /xApex cx def
-    /yApex { cy containerRadius add } bdef
-    /side { 3 sqrt containerRadius mul } bdef
+    /yApex { cy containerApothem add } bdef
+    /side { 3 sqrt containerApothem mul } bdef
          % Find using polar coordinates.
     /xBottomLeftCorner { 240 cos side mul xApex add } bdef
     /yBottomLeftCorner { 240 sin side mul yApex add } bdef

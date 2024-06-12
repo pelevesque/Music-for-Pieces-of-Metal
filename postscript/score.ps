@@ -12,7 +12,7 @@
 /bdef { bind def } bind def
 /xdef { exch def } bdef
 
-    % cx cy w => ｢empty｣
+    % cx cy w => empty
 /squarePath {
     /w xdef
     /cy xdef
@@ -28,7 +28,7 @@
     closepath
 } bdef
 
-    % cx cy diameter => ｢empty｣
+    % cx cy diameter => empty
 /circlePath {
     /diameter xdef
     /cy xdef
@@ -39,7 +39,7 @@
     closepath
 } bdef
 
-    % cx cy w => ｢empty｣
+    % cx cy w => empty
 /isoscelesTrianglePath {
     /w xdef
     /cy xdef
@@ -56,28 +56,28 @@
     closepath
 } bdef
 
-    % cx cy => ｢empty｣
+    % cx cy => empty
 /containerPath {
     /cy xdef
     /cx xdef
     cx cy widthContainer squarePath
 } bdef
 
-    % cx cy => ｢empty｣
+    % cx cy => empty
 /squareVoicePath {
     /cy xdef
     /cx xdef
     cx cy widthVoiceShape squarePath
 } bdef
 
-    % cx cy => ｢empty｣
+    % cx cy => empty
 /circleVoicePath {
     /cy xdef
     /cx xdef
     cx cy widthVoiceShape circlePath
 } bdef
 
-    % cx cy => ｢empty｣
+    % cx cy => empty
 /triangleVoicePath {
     /cy xdef
     /cx xdef

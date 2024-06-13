@@ -5,8 +5,8 @@
 % --------------------------------------------------------------------
 % Config
 
-/widthContainer 100 def
-/widthVoiceShape 60 def
+/widthContainer 36 def
+/widthVoiceShape 40 def
 
 % --------------------------------------------------------------------
 % Utilities
@@ -86,14 +86,68 @@
     cx cy widthVoiceShape isoscelesTrianglePath
 } bdef
 
+/square {
+    /cy xdef
+    /cx xdef
+    cx cy containerPath stroke
+} bdef
+
+    % cx cy w => -
+/Xmark {
+    /w xdef
+    /cy xdef
+    /cx xdef
+    /apothem { w 2 div } bdef
+    /xl { cx apothem sub } bdef
+    /xr { cx apothem add } bdef
+    /yb { cy apothem sub } bdef
+    /yt { cy apothem add } bdef
+    newpath
+        xl yb moveto
+        xr yt lineto
+    closepath
+    stroke
+    newpath
+        xl yt moveto
+        xr yb lineto
+    closepath
+    stroke
+} bdef
+
 % --------------------------------------------------------------------
 % Program
 
-100 100 containerPath stroke
-100 100 circleVoicePath stroke
+36  36 square
+72  36 square
+108 36 square
+144 36 square
+180 36 square
+216 36 square
+252 36 square
+288 36 square
+324 36 square
+360 36 square
+396 36 square
+432 36 square
 
-200 100 containerPath stroke
-200 100 squareVoicePath stroke
+36  72 square
+72  72 square
+108 72 square
+144 72 square
+180 72 square
+216 72 square
+252 72 square
+288 72 square
+324 72 square
+360 72 square
+396 72 square
+432 72 square
 
-300 100 containerPath stroke
-300 100 triangleVoicePath stroke
+36  72 18 Xmark
+72  36 18 Xmark
+108 72 18 Xmark
+180 36 18 Xmark
+216 72 18 Xmark
+288 36 18 Xmark
+360 72 18 Xmark
+396 36 18 Xmark

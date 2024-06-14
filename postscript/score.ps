@@ -6,7 +6,7 @@
 % Config
 
 /widthContainer 36 def
-/widthVoiceShape 40 def
+/widthVoiceShape 24 def
 
 % --------------------------------------------------------------------
 % Utilities
@@ -118,7 +118,7 @@
 % Program
 
 /numCols 12 def
-/numRows 16 def
+/numRows 8 def
 /xPos 0 def
 /yPos 0 def
 /squareW 36 def
@@ -132,3 +132,43 @@ numRows {
     numCols { moveXPos xPos yPos square } repeat
     resetXPos
 } repeat resetYPos
+
+36  72 18 Xmark
+72  36 18 Xmark
+108 72 18 Xmark
+180 36 18 Xmark
+216 72 18 Xmark
+288 36 18 Xmark
+360 72 18 Xmark
+396 36 18 Xmark
+
+/Times-Bold findfont 14 scalefont setfont
+
+72  144 circleVoicePath stroke 68.5  140 moveto (2) show
+144 144 circleVoicePath stroke 140.5 140 moveto (1) show
+180 108 circleVoicePath stroke 176.5 104 moveto (4) show
+252 144 circleVoicePath stroke 248.5 140 moveto (5) show
+288 108 circleVoicePath stroke 284.5 104 moveto (6) show
+324 144 circleVoicePath stroke 320.5 140 moveto (8) show
+396 108 circleVoicePath stroke 392.5 104 moveto (3) show
+432 144 circleVoicePath stroke 428.5 140 moveto (7) show
+
+72  216 triangleVoicePath stroke 68.5  208 moveto (1) show
+144 180 triangleVoicePath stroke 140.5 172 moveto (3) show
+180 180 triangleVoicePath stroke 176.5 172 moveto (7) show
+252 216 triangleVoicePath stroke 248.5 208 moveto (8) show
+288 216 triangleVoicePath stroke 284.5 208 moveto (2) show
+324 180 triangleVoicePath stroke 320.5 172 moveto (4) show
+396 216 triangleVoicePath stroke 392.5 208 moveto (5) show
+432 180 triangleVoicePath stroke 428.5 172 moveto (6) show
+
+36  288 squareVoicePath stroke 32.5  284 moveto (8) show
+72  288 squareVoicePath stroke 68.5  284 moveto (2) show
+108 252 squareVoicePath stroke 104.5 248 moveto (4) show
+180 288 squareVoicePath stroke 176.5 284 moveto (5) show
+216 252 squareVoicePath stroke 212.5 248 moveto (6) show
+288 288 squareVoicePath stroke 284.5 284 moveto (1) show
+360 288 squareVoicePath stroke 356.5 284 moveto (3) show
+396 288 squareVoicePath stroke 392.5 284 moveto (7) show
+
+showpage

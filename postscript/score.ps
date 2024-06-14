@@ -117,37 +117,18 @@
 % --------------------------------------------------------------------
 % Program
 
-36  36 square
-72  36 square
-108 36 square
-144 36 square
-180 36 square
-216 36 square
-252 36 square
-288 36 square
-324 36 square
-360 36 square
-396 36 square
-432 36 square
+/numCols 12 def
+/numRows 16 def
+/xPos 0 def
+/yPos 0 def
+/squareW 36 def
+/moveXPos { /xPos xPos squareW add def } bdef
+/moveYPos { /yPos yPos squareW add def } bdef
+/resetXPos { /xPos 0 def } bdef
+/resetYPos { /yPos 0 def } bdef
 
-36  72 square
-72  72 square
-108 72 square
-144 72 square
-180 72 square
-216 72 square
-252 72 square
-288 72 square
-324 72 square
-360 72 square
-396 72 square
-432 72 square
-
-36  72 18 Xmark
-72  36 18 Xmark
-108 72 18 Xmark
-180 36 18 Xmark
-216 72 18 Xmark
-288 36 18 Xmark
-360 72 18 Xmark
-396 36 18 Xmark
+numRows {
+    moveYPos
+    numCols { moveXPos xPos yPos square } repeat
+    resetXPos
+} repeat resetYPos

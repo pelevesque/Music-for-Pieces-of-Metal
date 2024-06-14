@@ -1,6 +1,6 @@
 %!PS
-%%BoundingBox: 0 0 468 612
-% 6.5 inches x 8.5 inches
+    % 13 inches x 8.5 inches
+%%BoundingBox: 0 0 936 612
 
 % --------------------------------------------------------------------
 % Config
@@ -182,138 +182,45 @@ numRows {
 /IBMPlexSans-Text findfont 16 scalefont setfont
 170 475 moveto (section I) show
 
-120 489 15 circlePath 1 1 0 setrgbcolor fill
+    % Page separator line.
+0.90 setgray
+newpath
+468 0 moveto
+468 612 lineto
+stroke
 
+    % Flower center.
+1 1 0 setrgbcolor
+120 489 15 circlePath fill
+
+    % Settings for flower petals.
 0 0 0 setrgbcolor
-
 0.02 setlinewidth
 120 490 translate
 45 45 scale
 
-% petal 1
-newpath
--0.01 0.055 moveto
--0.348 0.116
--0.547 0.69
--0.266 0.955
-curveto
-stroke
+    % Separator hack.
+/| { } bdef
 
-newpath
--0.01 0.055 moveto
--0.317 0.219
--0.44 0.754
--0.266 0.955
-curveto
-stroke
-
-newpath
--0.266 0.955 moveto
--0.218 1
-0.225 1
-0.21 0.471
-curveto
-stroke
-
-% petal 2
-newpath
-0.041 0.016 moveto
--0.007 0.576
-0.71 0.76
-0.763 0.613
-curveto
-stroke
-
-newpath
-0.041 0.016 moveto
-0.065 0.537
-0.668 0.715
-0.763 0.613
-curveto
-stroke
-
-newpath
-0.763 0.613 moveto
-0.895 0.474
-0.807 0.154
-0.444 0.016
-curveto
-stroke
-
-% petal 3
-
-newpath
-0 -0.009 moveto
-0.276 0.148
-0.907 -0.03
-0.885 -0.53
-curveto
-stroke
-
-newpath
-0 -0.009 moveto
-0.242 0.048
-0.847 -0.084
-0.885 -0.53
-curveto
-stroke
-
-newpath
-0.885 -0.53 moveto
-0.74 -0.758
-0.332 -0.78
-0.076 -0.39
-curveto
-stroke
-
-% petal 4
-
-newpath
--0.022 -0.016 moveto
-0.32 -0.527
--0.22 -1
--0.397 -0.91
-curveto
-stroke
-
-newpath
--0.046 -0.03 moveto
-0.13 -0.512
--0.165 -0.898
--0.397 -0.91
-curveto
-stroke
-
-newpath
--0.397 -0.91 moveto
--0.644 -0.79
--0.637 -0.383
--0.42 -0.217
-curveto
-stroke
-
-newpath
--0.012 0.02 moveto
--0.377 -0.443
--1 -0.138
--0.982 0.11
-curveto
-stroke
-
-newpath
--0.012 0.02 moveto
--0.448 -0.283
--0.948 -0.11
--0.982 0.11
-curveto
-stroke
-
-newpath
--0.982 0.11 moveto
--0.878 0.402
--0.622 0.45
--0.333 0.34
-curveto
-stroke
+    % petal 1
+newpath -0.01   0.055 moveto -0.348  0.116 | -0.547  0.69  | -0.266  0.955 curveto stroke
+newpath -0.01   0.055 moveto -0.317  0.219 | -0.44   0.754 | -0.266  0.955 curveto stroke
+newpath -0.266  0.955 moveto -0.218  1     |  0.225  1     |  0.21   0.471 curveto stroke
+    % petal 2
+newpath  0.041  0.016 moveto -0.007  0.576 |  0.71   0.76  |  0.763  0.613 curveto stroke
+newpath  0.041  0.016 moveto  0.065  0.537 |  0.668  0.715 |  0.763  0.613 curveto stroke
+newpath  0.763  0.613 moveto  0.895  0.474 |  0.807  0.154 |  0.444  0.016 curveto stroke
+    % petal 3
+newpath  0     -0.009 moveto  0.276  0.148 |  0.907 -0.03  |  0.885 -0.53  curveto stroke
+newpath  0     -0.009 moveto  0.242  0.048 |  0.847 -0.084 |  0.885 -0.53  curveto stroke
+newpath  0.885 -0.53  moveto  0.74  -0.758 |  0.332 -0.78  |  0.076 -0.39  curveto stroke
+    % petal 4
+newpath -0.022 -0.016 moveto  0.32  -0.527 | -0.22  -1     | -0.397 -0.91  curveto stroke
+newpath -0.046 -0.03  moveto  0.13  -0.512 | -0.165 -0.898 | -0.397 -0.91  curveto stroke
+newpath -0.397 -0.91  moveto -0.644 -0.79  | -0.637 -0.383 | -0.42  -0.217 curveto stroke
+    % petal 4
+newpath -0.012  0.02  moveto -0.377 -0.443 | -1     -0.138 | -0.982  0.11  curveto stroke
+newpath -0.012  0.02  moveto -0.448 -0.283 | -0.948 -0.11  | -0.982  0.11  curveto stroke
+newpath -0.982  0.11  moveto -0.878  0.402 | -0.622  0.45  | -0.333  0.34  curveto stroke
 
 showpage

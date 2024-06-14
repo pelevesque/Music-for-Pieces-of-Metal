@@ -5,4 +5,4 @@
 # ps2pdf -dEPSCrop score.ps score.pdf
 
     # Make a PDF file with GS.
-gs -sOutputFile=score.pdf -dNOPAUSE -dBATCH -g468x612 -r72 -sDEVICE=pdfwrite -dSAFER score.ps
+gs -sOutputFile=score.pdf -dNOPAUSE -dBATCH -g936x612 -r72 -sDEVICE=pdfwrite -dSAFER score.ps

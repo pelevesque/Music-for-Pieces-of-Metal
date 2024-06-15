@@ -5,6 +5,7 @@
 % --------------------------------------------------------------------
 % Config
 
+/showGuide true def
 /widthContainer 36 def
 /widthVoiceShape 24 def
 
@@ -250,6 +251,30 @@ newpath
 468 612 lineto
 stroke
 
+    % Separator hack.
+/| { } bdef
+
+    % Guides.
+/inch { 72 mul } bdef
+/margin 0.375 inch def
+showGuide {
+    1 0 0 setrgbcolor
+    newpath
+        margin                 | margin         | moveto
+        margin                 | 612 margin sub | lineto
+        468 margin sub         | 612 margin sub | lineto
+        468 margin sub         | margin         | lineto
+    closepath
+    stroke
+    newpath
+        margin         468 add | margin         | moveto
+        margin         468 add | 612 margin sub | lineto
+        468 margin sub 468 add | 612 margin sub | lineto
+        468 margin sub 468 add | margin         | lineto
+    closepath
+    stroke
+} if
+
 % --------------------------------------------------------------------
 % Flower.
 
@@ -262,9 +287,6 @@ stroke
 0.02 setlinewidth
 120 490 translate
 45 45 scale
-
-    % Separator hack.
-/| { } bdef
 
     % petal 1
 newpath -0.01   0.055 moveto -0.348  0.116 | -0.547  0.69  | -0.266  0.955 curveto stroke

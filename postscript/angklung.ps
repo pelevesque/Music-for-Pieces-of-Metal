@@ -255,25 +255,33 @@ stroke
 /| { } bdef
 
     % Guides.
+
+    % Add a gutter.
+
 /inch { 72 mul } bdef
-/margin 0.375 inch def
+/margin 0.25 inch def
+/gutter 0.5 inch def
+
 showGuide {
     1 0 0 setrgbcolor
     newpath
         margin                 | margin         | moveto
         margin                 | 612 margin sub | lineto
-        468 margin sub         | 612 margin sub | lineto
-        468 margin sub         | margin         | lineto
+        468 gutter sub         | 612 margin sub | lineto
+        468 gutter sub         | margin         | lineto
     closepath
     stroke
     newpath
-        margin         468 add | margin         | moveto
-        margin         468 add | 612 margin sub | lineto
+        gutter         468 add | margin         | moveto
+        gutter         468 add | 612 margin sub | lineto
         468 margin sub 468 add | 612 margin sub | lineto
         468 margin sub 468 add | margin         | lineto
     closepath
     stroke
 } if
+
+
+
 
 % --------------------------------------------------------------------
 % Flower.

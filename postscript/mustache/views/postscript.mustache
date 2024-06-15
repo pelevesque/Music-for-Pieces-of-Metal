@@ -1,0 +1,35 @@
+%!PS
+
+/page-w {{ page.w }} def
+/page-h {{ page.h }} def
+
+    % {{ page.w-inches }}" x {{ page.h-inches }}"
+%%BoundingBox: 0 0 /page-w /page-h
+
+% --------------------------------------------------------------------
+% Helpers
+
+/bdef { bind def } bind def
+/inch { 72 mul } bdef
+/| { } bdef
+
+% --------------------------------------------------------------------
+% Config
+
+/showGuide {{ showGuide }} def
+/margin 0.25 inch def
+/gutter 0.5 inch def
+
+% --------------------------------------------------------------------
+% Guide
+
+showGuide {
+    1 0 0 setrgbcolor
+    newpath
+        margin            | margin            | moveto
+        margin            | page-h margin sub | lineto
+        page-w gutter sub | page-h margin sub | lineto
+        page-w gutter sub | margin            | lineto
+    closepath
+    stroke
+} if

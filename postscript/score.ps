@@ -148,7 +148,7 @@ numRows {
 360 72 18 Xmark
 396 36 18 Xmark
 
-/IBMPlexSans-Text findfont 12 scalefont setfont
+/IBMPlexSans findfont 12 scalefont setfont
 
 72  144 circleVoicePath stroke 68.5  140 moveto (2) show
 144 144 circleVoicePath stroke 140.5 140 moveto (1) show
@@ -177,10 +177,56 @@ numRows {
 360 288 squareVoicePath stroke 356.5 284 moveto (3) show
 396 288 squareVoicePath stroke 392.5 284 moveto (7) show
 
-/IBMPlexSans-Text findfont 24 scalefont setfont
-170 500 moveto (A n g k l u n g) show
-/IBMPlexSans-Text findfont 16 scalefont setfont
-170 475 moveto (section I) show
+/xPos 468 def
+/resetXPos { /xPos 468 def } bdef
+
+numRows {
+    moveYPos
+    numCols { moveXPos xPos yPos square } repeat
+    resetXPos
+} repeat resetYPos
+
+504 72 18 Xmark
+540 36 18 Xmark
+576 72 18 Xmark
+648 36 18 Xmark
+684 72 18 Xmark
+756 36 18 Xmark
+828 72 18 Xmark
+864 36 18 Xmark
+
+504 144 circleVoicePath stroke
+540 144 circleVoicePath stroke
+576 108 circleVoicePath stroke
+648 144 circleVoicePath stroke
+684 108 circleVoicePath stroke
+756 144 circleVoicePath stroke
+828 108 circleVoicePath stroke
+864 144 circleVoicePath stroke
+
+504 216 triangleVoicePath stroke
+540 180 triangleVoicePath stroke
+576 180 triangleVoicePath stroke
+648 216 triangleVoicePath stroke
+684 216 triangleVoicePath stroke
+756 180 triangleVoicePath stroke
+828 216 triangleVoicePath stroke
+864 180 triangleVoicePath stroke
+
+504 288 squareVoicePath stroke
+540 288 squareVoicePath stroke
+576 252 squareVoicePath stroke
+648 288 squareVoicePath stroke
+684 252 squareVoicePath stroke
+756 288 squareVoicePath stroke
+828 288 squareVoicePath stroke
+864 288 squareVoicePath stroke
+
+/IBMPlexSans findfont 48 scalefont setfont
+230 480 moveto (A   n   g    k   l   u   n   g) show
+/IBMPlexSans findfont 16 scalefont setfont
+200 330 moveto (section I) show
+680 330 moveto (tutti) show
 
     % Page separator line.
 0.90 setgray
@@ -188,6 +234,9 @@ newpath
 468 0 moveto
 468 612 lineto
 stroke
+
+% --------------------------------------------------------------------
+% Flower.
 
     % Flower center.
 1 1 0 setrgbcolor

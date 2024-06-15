@@ -1,0 +1,164 @@
+%!PS
+    % 13 inches x 8.5 inches
+%%BoundingBox: 0 0 936 612
+
+% --------------------------------------------------------------------
+% Config
+
+/widthContainer 36 def
+/widthVoiceShape 24 def
+
+% --------------------------------------------------------------------
+% Utilities
+
+/bdef { bind def } bind def
+/xdef { exch def } bdef
+
+    % cx cy w => -
+/squarePath {
+    /w xdef
+    /cy xdef
+    /cx xdef
+    /apothem { w 2 div } bdef
+    /x { cx apothem sub } bdef
+    /y { cy apothem sub } bdef
+    newpath
+        x y moveto
+        w 0 rlineto
+        0 w rlineto
+        w neg 0 rlineto
+    closepath
+} bdef
+
+    % cx cy diameter => -
+/circlePath {
+    /diameter xdef
+    /cy xdef
+    /cx xdef
+    /radius { diameter 2 div } bdef
+    newpath
+        cx cy radius 0 360 arc
+    closepath
+} bdef
+
+    % cx cy w => -
+/isoscelesTrianglePath {
+    /w xdef
+    /cy xdef
+    /cx xdef
+    /apothem { w 2 div } bdef
+    /xApex cx def
+    /yApex { cy apothem add } bdef
+    /x { cx apothem sub } bdef
+    /y { cy apothem sub } bdef
+    newpath
+        xApex yApex moveto
+        x y lineto
+        w 0 rlineto
+    closepath
+} bdef
+
+    % cx cy => -
+/containerPath {
+    /cy xdef
+    /cx xdef
+    cx cy widthContainer squarePath
+} bdef
+
+    % cx cy => -
+/squareVoicePath {
+    /cy xdef
+    /cx xdef
+    cx cy widthVoiceShape squarePath
+} bdef
+
+    % cx cy => -
+/circleVoicePath {
+    /cy xdef
+    /cx xdef
+    cx cy widthVoiceShape circlePath
+} bdef
+
+    % cx cy => -
+/triangleVoicePath {
+    /cy xdef
+    /cx xdef
+    cx cy widthVoiceShape isoscelesTrianglePath
+} bdef
+
+/square {
+    /cy xdef
+    /cx xdef
+    cx cy containerPath
+    gsave
+    stroke
+    grestore
+    0.98 setgray
+    fill
+    0 setgray
+} bdef
+
+    % cx cy w => -
+/Xmark {
+    /w xdef
+    /cy xdef
+    /cx xdef
+    /apothem { w 2 div } bdef
+    /xl { cx apothem sub } bdef
+    /xr { cx apothem add } bdef
+    /yb { cy apothem sub } bdef
+    /yt { cy apothem add } bdef
+    newpath
+        xl yb moveto
+        xr yt lineto
+    closepath
+    stroke
+    newpath
+        xl yt moveto
+        xr yb lineto
+    closepath
+    stroke
+} bdef
+
+% --------------------------------------------------------------------
+% Program
+
+/numCols 12 def
+/numRows 15 def
+/xPos 12 def
+/yPos 12 def
+/squareW 34 def
+/moveXPos { /xPos xPos squareW add def } bdef
+/moveYPos { /yPos yPos squareW add def } bdef
+/resetXPos { /xPos 12 def } bdef
+/resetYPos { /yPos 12 def } bdef
+
+numRows {
+    moveYPos
+    numCols { moveXPos xPos yPos square } repeat
+    resetXPos
+} repeat resetYPos
+
+/xPos 480 def
+/resetXPos { /xPos 480 def } bdef
+
+numRows {
+    moveYPos
+    numCols { moveXPos xPos yPos square } repeat
+    resetXPos
+} repeat resetYPos
+
+/IBMPlexSans findfont 24 scalefont setfont
+26 580 moveto (Gong Kebyar) show
+/IBMPlexSans findfont 12 scalefont setfont
+200 550 moveto (section I) show
+680 550 moveto (tutti) show
+
+    % Page separator line.
+0.90 setgray
+newpath
+468 0 moveto
+468 612 lineto
+stroke
+
+showpage

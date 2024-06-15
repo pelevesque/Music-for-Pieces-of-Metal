@@ -5,4 +5,5 @@
 # ps2pdf -dEPSCrop score.ps score.pdf
 
     # Make a PDF file with GS.
-gs -sOutputFile=score.pdf -dNOPAUSE -dBATCH -g936x612 -r72 -sDEVICE=pdfwrite -dSAFER score.ps
+gs -sOutputFile=angklung.pdf -dNOPAUSE -dBATCH -g936x612 -r72 -sDEVICE=pdfwrite   -dSAFER angklung.ps
+gs -sOutputFile=gong.pdf     -dNOPAUSE -dBATCH -g936x612 -r72 -sDEVICE=pdfwrite   -dSAFER gong.ps

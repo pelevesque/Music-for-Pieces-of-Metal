@@ -1,0 +1,35 @@
+    # Here a global.
+my $frames-data = Q:to/EoD/
+    @ Section I
+
+    # 2
+    0.0.0.0.0.0.
+    .*..*..*..*.
+
+    # 3
+    ............
+    EoD
+;
+
+sub get-frame ($frame-num) {
+    return ~($frames-data ~~ /
+        ^^ "# $frame-num\n" (.*?) \n [ \n | $ ]
+    /)[0];
+}
+
+sub show-frame ($frame-num) {
+    say "Frame $frame-num:\n<{get-frame $frame-num}>";
+}
+
+show-frame 3;
+show-frame 2;
+
+=finish
+
+Prints this:
+
+    Frame 3:
+    <............>
+    Frame 2:
+    <0.0.0.0.0.0.
+    .*..*..*..*.>

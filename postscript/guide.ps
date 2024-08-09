@@ -1,0 +1,35 @@
+%!PS
+
+/page-w 468 def
+/page-h 612 def
+
+    % 6.5" x 8.5"
+%%BoundingBox: 0 0 468 612
+
+% --------------------------------------------------------------------
+% Helpers
+
+/bdef { bind def } bind def
+/inch { 72 mul } bdef
+/| { } bdef
+
+% --------------------------------------------------------------------
+% Config
+
+/showGuide true def
+/margin 0.25 inch def
+/gutter 0.5 inch def
+
+% --------------------------------------------------------------------
+% Guide
+
+showGuide {
+    1 0 0 setrgbcolor
+    newpath
+        margin            | margin            | moveto
+        margin            | page-h margin sub | lineto
+        page-w gutter sub | page-h margin sub | lineto
+        page-w gutter sub | margin            | lineto
+    closepath
+    stroke
+} if

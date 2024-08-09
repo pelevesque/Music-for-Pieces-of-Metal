@@ -286,9 +286,11 @@ showGuide {
 % --------------------------------------------------------------------
 % Flower.
 
+/flower {
+
     % Flower center.
 1 1 0 setrgbcolor
-120 489 15 circlePath fill
+120 489 15 circlePath fill % This needs to be after the translate stuff....
 
     % Settings for flower petals.
 0 0 0 setrgbcolor
@@ -316,5 +318,9 @@ newpath -0.397 -0.91  moveto -0.644 -0.79  | -0.637 -0.383 | -0.42  -0.217 curve
 newpath -0.012  0.02  moveto -0.377 -0.443 | -1     -0.138 | -0.982  0.11  curveto stroke
 newpath -0.012  0.02  moveto -0.448 -0.283 | -0.948 -0.11  | -0.982  0.11  curveto stroke
 newpath -0.982  0.11  moveto -0.878  0.402 | -0.622  0.45  | -0.333  0.34  curveto stroke
+
+} bdef
+
+flower
 
 showpage

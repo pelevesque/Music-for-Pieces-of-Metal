@@ -1,178 +1,111 @@
-----------------------------------------------------------------------
+local u = require("utilities")
 
-print("Test")
+    -- breakpoints.
+    -- Timecode without the hour mark.
+local timecodeOfBeats = {
+        -- Kajar Intro
+    '00:00:03', '00:00:09', '00:00:15', '00:00:22', '00:01:04', '00:01:10',
+    '00:01:16', '00:01:22', '00:02:05', '00:02:11', '00:02:17', '00:02:23',
+    '00:03:06', '00:03:12', '00:03:18', '00:04:00', '00:04:06', '00:04:13',
+    '00:04:19', '00:05:01', '00:05:07', '00:05:13', '00:05:20', '00:06:02',
+        -- Ostinato
+    '00:06:08', '00:06:14', '00:06:20', '00:07:03', '00:07:09', '00:07:15',
+    '00:07:21', '00:08:03', '00:08:10', '00:08:16', '00:08:22', '00:09:04',
+    '00:09:10', '00:09:17', '00:09:23', '00:10:05', '00:10:11', '00:10:18',
+    '00:11:00', '00:11:06', '00:11:12', '00:11:18', '00:12:01', '00:12:07',
+        -- Build I
+    '00:12:13', '00:12:19', '00:13:01', '00:13:08', '00:13:14', '00:13:20',
+    '00:14:02', '00:14:08', '00:14:15', '00:15:03', '00:15:09', '00:15:15',
+}
 
-local function colorizeBackground(obj, r, g, b, a)
-    obj.TopLeftRed = r
-    obj.TopLeftGreen = g
-    obj.TopLeftBlue = b
-    obj.TopLeftAlpha = a
-end
+--for k, v in pairs(timecodeOfBeats) do
+--    print( k .. ' | ' .. v .. ' | ' .. timecodeToFrame(v) )
+--end
 
-    -- Load fusion.
-    -- local fusion = Fusion()
 local comp = fusion:GetCurrentComp()
 
-    -- Clear all tools.
-local tools = comp:GetToolList(true) -- Get all tools in the flow
-for _, tool in ipairs(tools) do
-    comp:RemoveTool(tool) -- Remove each tool
-end
-
-    -- Generate metronome blocks.
-local multiMerge = comp:AddTool("MultiMerge")
-local tbg = comp:AddTool("Background")
-
-colorizeBackground(tbg, 0, 0, 0, 0)
-
-multiMerge:ConnectInput("Background", tbg)
-for i = 1, 6 do
-    local r = comp:AddTool("RectangleMask")
-
-    -- r:SetInput("Width", 0.1)
-    -- r:SetInput("Height", 0.2)
-    r.Width = 0.1
-    r.Height = 0.2
-    r.Center = { 0.1 * i, 0.2 * i }
-    -- r:SetInput("Center", { 0.1 * i, 0.2 * i })
-
-    local b = comp:AddTool("Background")
-    b:ConnectInput("EffectMask", r)
-    multiMerge:ConnectInput("Layer" .. tostring(i) .. ".Foreground", b)
-end
+--local t = comp.ActiveTool
+--local attrs = t:GetAttrs()
+--u.dump(attrs)
 
 local merge = comp:AddTool("Merge")
-local bg = comp:AddTool("Background")
-
-colorizeBackground(bg, 0, 0.6, 0, 1)
-
-merge:ConnectInput("Foreground", multiMerge)
-merge:ConnectInput("Background", bg)
-
+local rectangle = comp:AddTool("RectangleMask")
+local rectangleBackground = comp:AddTool("Background")
+local rectangleTransform = comp:AddTool("ofx.com.blackmagicdesign.resolvefx.Transform")
 local output = comp:AddTool("MediaOut")
+local background = comp:AddTool("Background")
 
+merge:ConnectInput("Background", background)
+rectangleBackground:ConnectInput("EffectMask", rectangle)
+--rectangleTransform:ConnectInput("Source", rectangleBackground)
+merge:ConnectInput("Foreground", rectangleBackground)
 output:ConnectInput("Input", merge)
 
-----------------------------------------------------------------------
+--local rectangleTransformComp = rectangleTransform:Comp()
+--rectangleTransform.posX = rectangleTransformComp:AddTool('BezierSpline')
+--rectangleTransform.posY = rectangleTransformComp:AddTool('BezierSpline')
+
+u.setupBackgroundNodeForSolidColoring(background)
+u.colorizeBackgroundNodeWithSolid(background, 0,   0.677, 0.331, 0.559, 1.0)
+u.colorizeBackgroundNodeWithSolid(background, 100, 0.2,   1,     0.7,   0.4)
+
+u.setupRectangleNodeForShaping(rectangle)
+
+--rectangle.CenterX[0]   = 0.1
+--rectangle.CenterX[100] = 0.9
+--rectangle.CenterY[0]   = 0.5
+--rectangle.CenterY[100] = 1
+
+rectangle.Width[0] = 0.063
+rectangle.Height[0] = 0.101
+rectangle.CornerRadius[0] = 0.7
+
+rectangle.Width[1000] = 0.063
+rectangle.Height[1000] = 0.101
+rectangle.CornerRadius[1000] = 0
+
+    -- This works.
+--rectangle.Center = {0.2, 0.9}
+
+
+rectangle.Center[1]   = {0.2, 0.9}
+rectangle.Center[100] = {0.9, 0.2}
+
+
+--rectangle.Center:ConnectTo(comp:AddTool("Path"))
+--local path = rectangle.Center:GetConnectedOutput():GetTool()
+--path.Value[10] = {0.2, 0.2}
+--path.Value[50] = {0.8, 0.8}
 
 
 
+--rectangle.Center:SetKeyFrames({
+--    [1] =   {0.2, 0.9},
+--    [100] = {0.9, 0.2}
+--})
 
 
+--rectangleTransform.posX[0]    = 0
+--rectangleTransform.posX[1000] = -4
 
+--rectangleTransform.posY[0]    = 0
+--rectangleTransform.posY[1000] = 0.5
 
+--comp:SetKeyframe(rectangle, "Center", 0
+--comp:SetKeyframe(rectangle, "Center", 100)
 
+--rectangle.Center:SetKeyframe(0, {0.2, 0.5}, "Linear")
+--rectangle.Center:SetKeyframe(100, {0.8, 0.5}, "Linear")
 
+--rectangle:SetInput("Center", { x = 0.2, y = 0.2 }, 1)
+--rectangle:SetInput("Center", { x = 0.5, y = 0.7 }, 10)
 
-
-
---local flow = comp.CurrentFrame.FlowView
---comp:SetActiveTool(output)
---output:SetCurrentView(2)
---comp:RefreshView()
-
-
--- comp:SetPreview(output)
-
--- comp:ActiveViewer():ViewNode(comp:FindTool("MediaOut1"))
-
-        -- comp:SetViewMode(output, "Right") -- 1 corresponds to RightView, 0 to LeftView
-
-
--- output:SetAttrs({TOOLBOX_RightView = true})
-
-
--- output:SetAttrs({["ViewRight"] = true})
-
- -- output:SetCurrentView(2)
-
---output:ViewOn(2)
-
-
--- output.RightView = 1
-
--- output.RightView = true
-
---[[
-    -- Optional: set a default color (e.g., white)
-    -- Color format is {R, G, B, A} with values from 0 to 1
-    background:SetInput("TopColor", {R = 1, G = 1, B = 1, A = 1})
---]]
-
---[[
-
-local r = comp:AddTool("RectangleMask", 1)
-local bg1 = comp:AddTool("Background", 1)
-local mo = comp:AddTool("MediaOut", 1)
-
-bg1:ConnectInput("EffectMask", r)
-mo:ConnectInput("Input", bg1)
-
--- Configure the rectangle properties
-r.Width = 0.5
-r.Height = 0.25
-r.Center = {0.5, 0.5} -- Center of the screen
-r.CornerRadius = 0.05 -- Optional: Rounded corners
-
-bg1.TopLeftRed = 1
-bg1.TopLeftGreen = 0
-bg1.TopLeftBlue = 0
-
-print("angklung script ended...")
-
-]]--
-
---[[
-
--- https://www.youtube.com/watch?v=0RwKTNj6CpU
-
-local operator = "GroupOperator"
-local toolName = "MYTEXTTOOL"
-
-local mainInput = "EffectMask"
-local mainOutput = "Output"
-local sourceTool = "Text1"
-local input = {"StyledText", "Font", "Style", "Size"}
-
-local macro = {
-    Tools = {}
-}
-macro.Tools = table.ordered()
-macro.Tools[toolName] = { __ctor = operator }
-local tools = macro.Tools[toolName]
-
-tools.ViewInfo = { __ctor = "GroupInfo" }
-tools.Inputs = {}
-tools.Inputs = table.ordered()
-tools.Outputs = {}
-table.Outputs = table.ordered()
-
-local function addInputToTool(targetInputName, targetSource)
-    tools[toolName].Inputs[targetInputName] = {
-        __ctor = "InstanceInput",
-        SourceOp = sourceTool,
-        Source = targetSource,
-        ControlGroup = 1,
-        Page = "Text"
-    }
+for k, v in pairs(timecodeOfBeats) do
+    local frame = u.timecodeToFrame(v)
+    rectangle.Width[frame] = 0.065
+    rectangle.Height[frame] = 0.108
+    rectangle.CornerRadius[frame] = 0.3
+    rectangle.Width[frame + 1] = 0.063
+    rectangle.Height[frame + 1] = 0.101
+    rectangle.CornerRadius[frame + 1] = 0.7
 end
-
-addInputToTool(maintInput, "EffectMask")
-
-for _, v in ipairs(inputs) do
-    addInputToTool(v, v)  
-end
-
-tools[toolName].Outputs[mainOutput] = {
-    __ctor = "InstanceOutput",
-    SourceOp = sourceTool,
-    Source = "Output"
-}
-
-local selected = comp:GetToolList(true)
-t = comp:CopySettings(selected)
-tools[toolName].Tools = t.Tools
-
-comp:Paste(macro)
-
---]]
